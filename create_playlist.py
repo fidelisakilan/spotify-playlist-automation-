@@ -85,7 +85,7 @@ class CreatePlaylist:
         response_json = response.json()
 
         # playlist id
-        return response_json["id"]
+        return response_json['id']
 
     # search for the song
     def get_spotify_uri(self, song_name, artist):
@@ -94,7 +94,7 @@ class CreatePlaylist:
         )
         response = requests.get(
             query,
-            data=query, headers={
+            headers={
                 "Content-Type": "application/json",
                 "Authorization": "Bearer {}".format(spotify_token)
             }
@@ -118,7 +118,7 @@ class CreatePlaylist:
         # create a new playlist
         playlist_id = self.create_playlist()
         # add all songs into new playlist
-        request_data = json.dumps()
+        request_data = json.dumps(uris)
 
         query = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
         response = requests.post(
@@ -131,3 +131,8 @@ class CreatePlaylist:
         )
         response_json = response.json()
         return response_json
+
+
+if __name__ == '__main__':
+    cp = CreatePlaylist()
+    cp.add_song_to_playlist()
